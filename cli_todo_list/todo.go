@@ -19,10 +19,19 @@ type Todo struct {
 
 type Todos []Todo
 
-func (t *Todos) add(title string) {
+func (t *Todos) add(title string) error {
+	if len(title) == 0 {
+		err := errors.New("Title length must be greater than 0")
+		fmt.Println(err)
+
+		return err
+	}
+
 	todo := Todo{title, false, time.Now(), nil}
 
 	*t = append(*t, todo)
+
+	return nil
 }
 
 func (t *Todos) validateIndex(index int) error {
