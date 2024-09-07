@@ -6,6 +6,8 @@ func main() {
 	storage := newStorage[Todos]("todos.json")
 	storage.load(&todos)
 
-	todos.print()
+	commandFlags := newCommandFlags()
+	commandFlags.execute(&todos)
+
 	storage.save(todos)
 }

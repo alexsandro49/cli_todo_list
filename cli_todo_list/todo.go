@@ -19,24 +19,26 @@ type Todo struct {
 
 type Todos []Todo
 
-func (t *Todos) add(title string) error {
-	if len(title) == 0 {
-		err := errors.New("Title length must be greater than 0")
-		fmt.Println(err)
-
-		return err
-	}
-
+func (todos *Todos) add(title string) error {
 	todo := Todo{title, false, time.Now(), nil}
 
-	*t = append(*t, todo)
+	for _, t := range *todos {
+		if t.Title == title {
+			err := errors.New("Error: Task already registered!")
+			fmt.Println(err)
+
+			return err
+		}
+	}
+
+	*todos = append(*todos, todo)
 
 	return nil
 }
 
 func (t *Todos) validateIndex(index int) error {
 	if index < 0 || index >= len(*t) {
-		err := errors.New("Invalid index")
+		err := errors.New("Error: Invalid index!")
 		fmt.Println(err)
 
 		return err
